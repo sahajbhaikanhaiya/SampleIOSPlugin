@@ -68,12 +68,13 @@ Plugin.xml :
 @implementation <plugin-name-here>
 
 - (void) echoSum: (CDVInvokedUrlCommand *) command{
+
     NSNumber *variable1 = [command.arguments objectAtIndex:0];
     NSNumber *variable2 = [command.arguments objectAtIndex:1];
-
     int sum = variable1.intValue + variable2.intValue;
-    
-    NSLog(@"[echoSum] The sum is : %d",sum);
+    CDVPluginResult *pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsInt:sum];
+    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+
 }
 
 @end
@@ -86,8 +87,8 @@ var exec = require('cordova/exec');
 var PLUGIN_NAME = "<plugin-name-here>";
 
 var <plugin-name-here> = {
-    echoSum: function(firstInt,secondInt){
-        exec(null, null, PLUGIN_NAME, 'echoSum', [firstInt,secondInt]);
+    echoSum: function(success,firstInt,secondInt){
+        exec(success, null, PLUGIN_NAME, 'echoSum', [firstInt,secondInt]);
     }
 };
 
@@ -109,5 +110,8 @@ window.<plugin-name-here>.<function-name-here>(<pass-parameters-here>);
 ```
 For example:
 ```
-window.SampleIOSPlugin.echoSum(10,20);
+var onSuccess = function(result){
+    console.log("The sum is : " result);
+};
+window.SampleIOSPlugin.echoSum(onSuccess,10,20);
 ```

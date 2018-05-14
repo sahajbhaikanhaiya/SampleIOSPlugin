@@ -8,25 +8,18 @@
     <js-module
             name="SampleIOSPlugin"
             src="www/sampleIOSPlugin.js">
-
         <clobbers target="SampleIOSPlugin" />
-
     </js-module>
 
     <platform name="ios">
 
         <config-file target="config.xml" parent="/*">
-
             <feature name="SampleIOSPlugin">
-
                 <param name="ios-package" value="SampleIOSPlugin" onLoad="true" />
-
             </feature>
-
         </config-file>
 
         <header-file src="src/ios/SampleIOSPlugin.h"/>
-
         <source-file src="src/ios/SampleIOSPlugin.m"/>
 
     </platform>
